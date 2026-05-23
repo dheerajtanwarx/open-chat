@@ -276,19 +276,42 @@ export async function POST(request: NextRequest) {
     }
 
     const client = getOpenAIClient();
-    const completion = await client.chat.completions.create({
-      model: getLLMModel(),
-      messages: [
-        { role: "system", content: systemPrompt },
-        ...messages.map((msg) => ({
-          role: msg.role === "user" ? ("user" as const) : ("assistant" as const),
-          content: msg.content,
-        })),
-      ],
-      temperature: 1,
-      // top_p: 0.9,
-      max_completion_tokens: 1024,
-    });
+    let completion: any;
+    try {
+      completion = await client.chat.completions.create({
+        model: getLLMModel(),
+        messages: [
+          { role: "system", content: systemPrompt },
+          ...messages.map((msg) => ({
+            role: msg.role === "user" ? ("user" as const) : ("assistant" as const),
+            content: msg.content,
+          })),
+        ],
+        temperature: 1,
+        // top_p: 0.9,
+        max_completion_tokens: 1024,
+      });
+    } catch (providerErr) {
+      // Log full provider error server-side (do not leak secrets to client)
+      console.error("OpenAI provider error:", providerErr);
+
+      // Extract useful fields if present
+      const p: any = providerErr as any;
+      const providerInfo = {
+        code: p.code ?? p.error?.code ?? null,
+        param: p.param ?? p.error?.param ?? null,
+        requestID:
+          p.requestID ?? p.request_id ?? p.error?.requestID ?? p.error?.request_id ??
+          p.response?.headers?.["x-request-id"] ?? p.response?.data?.requestID ?? null,
+        status: p.status ?? p.error?.status ?? p.response?.status ?? null,
+        message: (providerErr instanceof Error ? providerErr.message : String(providerErr)) ?? null,
+      };
+
+      return NextResponse.json(
+        { error: "OpenAI provider error", provider: providerInfo },
+        { status: providerInfo.status ?? 500 },
+      );
+    }
 
     const rawReply =
       completion.choices[0]?.message?.content?.trim() ??

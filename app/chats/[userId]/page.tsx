@@ -869,7 +869,7 @@ export default function ChatPage() {
         </button>
       )}
 
-      <div className="min-h-14 flex-none px-3 w-full gap-3 border-zinc-200 dark:border-zinc-800 border-t flex items-center bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md z-10 transition-colors">
+      <div className="min-h-14 flex-none px-3 w-full gap-3 border-zinc-200 dark:border-zinc-800 border-t flex items-center bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md z-10 transition-colors ">
         <div className="">
           <FiPlus className="size-5 text-neutral-600 dark:text-neutral-400" />
         </div>
