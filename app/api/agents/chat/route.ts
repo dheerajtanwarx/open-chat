@@ -248,7 +248,7 @@ export async function POST(request: NextRequest) {
     getOpenAIClient();
   } catch {
     return NextResponse.json(
-      { error: "OpenRouter API key not configured" },
+      { error: "Azure OpenAI is not configured" },
       { status: 500 },
     );
   }
@@ -285,9 +285,9 @@ export async function POST(request: NextRequest) {
           content: msg.content,
         })),
       ],
-      temperature: 0.7,
-      top_p: 0.9,
-      max_tokens: 1024,
+      temperature: 1,
+      // top_p: 0.9,
+      max_completion_tokens: 1024,
     });
 
     const rawReply =
@@ -303,7 +303,7 @@ export async function POST(request: NextRequest) {
         ? (err as { status: number }).status
         : 500;
     const message =
-      err instanceof Error ? err.message : "OpenRouter API request failed";
+      err instanceof Error ? err.message : "Azure OpenAI request failed";
 
     console.error("LLM chat error:", err);
     return NextResponse.json(
