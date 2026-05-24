@@ -796,7 +796,7 @@ export default function ChatPage() {
         <div
           ref={messagesContainerRef}
           onScroll={handleMessagesScroll}
-          className="flex-1 overflow-y-auto flex flex-col gap-2 px-3 w-full py-3"
+          className="flex-1 overflow-y-auto flex flex-col gap-2 px-3 w-full py-3 pb-20"
         >
           {isMessagesLoading ? (
             <div className="flex-1 flex flex-col items-center justify-center gap-3">
@@ -869,7 +869,10 @@ export default function ChatPage() {
         </button>
       )}
 
-      <div className="min-h-14 flex-none px-3 w-full gap-3 border-zinc-200 dark:border-zinc-800 border-t flex items-center bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md z-10 transition-colors ">
+      <div
+        className="min-h-14 flex-none px-3 w-full gap-3 border-zinc-200 dark:border-zinc-800 border-t flex items-center bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md z-10 transition-colors sticky bottom-0"
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0)" }}
+      >
         <div className="">
           <FiPlus className="size-5 text-neutral-600 dark:text-neutral-400" />
         </div>

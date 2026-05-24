@@ -85,7 +85,7 @@ export default function ChatLayout({
             chatInfo === undefined ? (
               <ChatHeaderSkeleton />
             ) : chatInfo === null ? (
-              <div className="bg-[#FAFAFB] dark:bg-zinc-900 flex-none px-3 flex items-center border-[#ECECEE] dark:border-zinc-800 w-full h-14 border-b gap-3">
+              <div className="bg-[#FAFAFB] dark:bg-zinc-900 flex-none px-3 flex items-center border-[#ECECEE] dark:border-zinc-800 w-full h-14 border-b gap-3 sticky top-0 z-30 backdrop-blur-md">
                 <button
                   onClick={() => router.push("/chats")}
                   className="md:hidden p-2 -ml-2 rounded-full hover:bg-neutral-200 dark:hover:bg-zinc-800 transition-colors"
@@ -99,7 +99,7 @@ export default function ChatLayout({
                 </div>
               </div>
             ) : (
-              <div className="bg-[#FAFAFB] dark:bg-zinc-900 flex-none px-3 flex items-center border-[#ECECEE] dark:border-zinc-800 w-full h-14 border-b gap-3">
+              <div className="bg-[#FAFAFB] dark:bg-zinc-900 flex-none px-3 flex items-center border-[#ECECEE] dark:border-zinc-800 w-full h-14 border-b gap-3 sticky top-0 z-30 backdrop-blur-md">
                 <button
                   onClick={() => router.push("/chats")}
                   className="md:hidden p-2 -ml-2 rounded-full hover:bg-neutral-200 dark:hover:bg-zinc-800 transition-colors"
